@@ -56,6 +56,16 @@ dash-board/
 
 ## How to Run
 
+### Quick Start (Recommended)
+
+You can run both the backend and frontend simultaneously with a single command from the project root:
+
+```bash
+npm run dev
+```
+
+---
+
 ### Prerequisites
 
 - Python 3.10+
@@ -63,9 +73,9 @@ dash-board/
 
 ---
 
-### 1. Start the Backend
+### 1. Start the Backend (Manual)
 
-Open a terminal and run:
+If you prefer to run it separately:
 
 ```bash
 backend\venv\Scripts\python.exe backend\manage.py runserver
@@ -75,9 +85,9 @@ The Django API will be available at: `http://127.0.0.1:8000/api/companies/`
 
 ---
 
-### 2. Start the Frontend
+### 2. Start the Frontend (Manual)
 
-Open a **second** terminal and run:
+If you prefer to run it separately:
 
 ```bash
 cmd /c "cd frontend && npm run dev"

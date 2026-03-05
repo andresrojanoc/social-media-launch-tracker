@@ -11,8 +11,31 @@
 
 .company-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
     gap: 1.5rem;
+    justify-content: center;
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+}
+
+/* Tablet resolution (960x540) */
+@media (min-width: 768px) {
+    .company-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop resolution (1920x1080) */
+@media (min-width: 1200px) {
+    .company-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large screens */
+@media (min-width: 1600px) {
+    .company-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .dashboard-state {

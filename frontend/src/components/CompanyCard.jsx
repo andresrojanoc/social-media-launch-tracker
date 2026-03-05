@@ -107,9 +107,7 @@ export default function CompanyCard({ company }) {
             {company.contact_info && <ContactBox contact={company.contact_info} />}
 
             {/* DM Draft (US3) */}
-            {poorLaunches.length > 0 && (
-                <DMDraftPrompt companyId={company.id} companyName={company.name} />
-            )}
+            <DMDraftPrompt companyId={company.id} companyName={company.name} />
         </article>
     );
 }

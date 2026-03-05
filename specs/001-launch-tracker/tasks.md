@@ -135,3 +135,38 @@
 3. Add User Story 2 → Test contact info box rendering
 4. Add User Story 3 → Test DM drafting functionality
 5. Polish styling and documentation
+---
+
+## Phase 7: Universal DM Draft & Responsiveness (User Request - Step 549)
+
+**Purpose**: Make DM drafting available for all companies, add a dummy send button, and ensure responsive design.
+
+- [x] T029 [B] Remove "poor performance" check in `backend/api/views.py`
+- [x] T030 [F] Remove conditional rendering of `DMDraftPrompt` in `CompanyCard.jsx`
+- [x] T031 [F] Add dummy "Send DM" button in `DMDraftPrompt.jsx`
+- [x] T032 [F] Apply responsive grid layout in `Dashboard.css`
+- [x] T033 [F] Ensure centered content and mobile-friendly styles in CSS files
+- [x] T034 [F] Update `DMDraftPrompt.jsx` subtitle and button behavior
+- [x] T035 [B] Make `seed_data.py` parametrizable with `--count` argument
+
+---
+
+## Phase 8: Repository Pattern (User Request - Step 632)
+
+**Purpose**: Decouple data access from Django ORM using the Repository pattern.
+
+- [x] T036 [B] Create `api/repositories.py` with interfaces and Django implementations
+- [x] T037 [B] Refactor `api/views.py` to use repositories
+- [x] T038 [B] Verify data access still works correctly across the app
+
+---
+
+## Phase 9: Unified Code Review & Decoupling (User Request - Step 691)
+
+**Purpose**: Formalize architecture with Service Layers and further decouple logic from framework concerns.
+
+- [x] T039 [B] Introduce Application Service Layer in `api/services.py`
+- [x] T040 [B] Refactor `views.py` to use Service Layer exclusively for business logic
+- [x] T041 [B] Extract ORM-specific logic from views into Repositories
+- [x] T042 [F] Create Frontend Service Layer for API calls
+- [x] T043 [F] Refactor components to use Frontend Services

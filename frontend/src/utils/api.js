@@ -23,3 +23,5 @@ export const apiClient = {
         return response.json();
     }
 };
+
+export default apiClient;

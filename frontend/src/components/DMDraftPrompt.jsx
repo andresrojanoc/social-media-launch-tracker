@@ -4,7 +4,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
-import { apiClient } from '../utils/api.js';
+import companyService from '../services/companyService.js';
 import '../css/DMDraftPrompt.css';
 
 /* ── Toolbar button ── */
@@ -112,7 +112,7 @@ export default function DMDraftPrompt({ companyId, companyName }) {
         setLoading(true);
         setError(null);
         try {
-            const data = await apiClient.post(`/companies/${companyId}/draft_dm/`, { platform });
+            const data = await companyService.generateDraft(companyId, platform);
             // Insert the generated plain text as a paragraph block
             editor.commands.setContent(
                 data.draft_text.split('\n').map(line => `<p>${line || '<br>'}</p>`).join('')
@@ -136,7 +136,7 @@ export default function DMDraftPrompt({ companyId, companyName }) {
         <div className="dm-draft-prompt">
             <h3>✉️ Draft Outreach DM</h3>
             <p className="dm-subtitle">
-                This launch had low engagement. Draft a personal outreach message to offer your services.
+                Draft a personal outreach message to offer your services to this company.
             </p>
 
             <div className="dm-controls">
@@ -162,9 +162,18 @@ export default function DMDraftPrompt({ companyId, companyName }) {
                 <EditorContent editor={editor} className="dm-editor" />
             </div>
 
-            <button className="btn-copy" onClick={copyToClipboard}>
-                {copied ? '✅ Copied!' : '📋 Copy to Clipboard'}
-            </button>
+            <div className="dm-actions">
+                <button className="btn-copy" onClick={copyToClipboard}>
+                    {copied ? '✅ Copied!' : '📋 Copy to Clipboard'}
+                </button>
+                <button
+                    className="btn-send"
+                    onClick={() => alert(`🚀 Dummy Action: DM would be sent to ${companyName}'s ${platform} profile!`)}
+                    disabled={!editor || editor.isEmpty}
+                >
+                    📫 Send DM
+                </button>
+            </div>
         </div>
     );
 }

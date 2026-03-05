@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { apiClient } from '../utils/api.js';
+import companyService from '../services/companyService.js';
 import CompanyCard from './CompanyCard.jsx';
 import '../css/Dashboard.css';
 
@@ -9,7 +9,7 @@ export default function Dashboard() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        apiClient.get('/companies/')
+        companyService.fetchCompanies()
             .then(data => {
                 setCompanies(data.results ?? data);
                 setLoading(false);

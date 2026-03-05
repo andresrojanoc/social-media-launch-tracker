@@ -180,3 +180,30 @@
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
+
+@media (max-width: 480px) {
+    .card-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .card-title-group {
+        width: 100%;
+    }
+
+    .raised-badge {
+        align-self: center;
+        width: 100%;
+    }
+
+    .launch-row {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .launch-metrics {
+        flex-direction: column;
+    }
+}
