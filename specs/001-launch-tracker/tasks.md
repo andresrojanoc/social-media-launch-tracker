@@ -170,3 +170,15 @@
 - [x] T041 [B] Extract ORM-specific logic from views into Repositories
 - [x] T042 [F] Create Frontend Service Layer for API calls
 - [x] T043 [F] Refactor components to use Frontend Services
+
+---
+
+## Phase 10: Robust Error Handling (User Request - Step 865)
+
+**Purpose**: Implement consistent error reporting and graceful degradation across backend and frontend.
+
+- [x] T044 [B] Implement custom DRF exception handler in `api/exceptions.py`
+- [x] T045 [B] Register exception handler in `settings.py`
+- [x] T046 [F] Enhance `api.js` to handle non-200 responses and network errors
+- [x] T047 [F] Create `ErrorDisplay` common component
+- [x] T048 [F] Integrate error handling into `Dashboard` and `DMDraftPrompt`

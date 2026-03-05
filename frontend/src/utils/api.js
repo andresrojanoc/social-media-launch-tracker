@@ -1,26 +1,59 @@
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
+/**
+ * Custom error class for API failures.
+ */
+export class ApiError extends Error {
+    constructor(message, status, data) {
+        super(message);
+        this.name = 'ApiError';
+        this.status = status;
+        this.data = data;
+    }
+}
+
+async function handleResponse(response) {
+    if (!response.ok) {
+        let errorData;
+        try {
+            errorData = await response.json();
+        } catch (e) {
+            errorData = { message: response.statusText };
+        }
+
+        // Use the standardized message from our backend handler if available
+        const errorMessage = errorData.message || `API request failed with status ${response.status}`;
+        throw new ApiError(errorMessage, response.status, errorData);
+    }
+    return response.json();
+}
+
 export const apiClient = {
     async get(endpoint) {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`);
-        if (!response.ok) {
-            throw new Error(`API GET request failed: ${response.statusText}`);
+        try {
+            const response = await fetch(`${API_BASE_URL}${endpoint}`);
+            return await handleResponse(response);
+        } catch (error) {
+            if (error instanceof ApiError) throw error;
+            // Handle network/offline errors
+            throw new ApiError('Network error: Unable to connect to the server. Please check if the backend is running.', 0, null);
         }
-        return response.json();
     },
 
     async post(endpoint, data) {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-        if (!response.ok) {
-            throw new Error(`API POST request failed: ${response.statusText}`);
+        try {
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            return await handleResponse(response);
+        } catch (error) {
+            if (error instanceof ApiError) throw error;
+            throw new ApiError('Network error: Unable to connect to the server.', 0, null);
         }
-        return response.json();
     }
 };
 

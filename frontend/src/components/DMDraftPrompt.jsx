@@ -118,7 +118,10 @@ export default function DMDraftPrompt({ companyId, companyName }) {
                 data.draft_text.split('\n').map(line => `<p>${line || '<br>'}</p>`).join('')
             );
         } catch (err) {
-            setError('Failed to generate draft. Try again.');
+            setError({
+                message: err.message,
+                details: err.data
+            });
         } finally {
             setLoading(false);
         }
@@ -154,7 +157,17 @@ export default function DMDraftPrompt({ companyId, companyName }) {
                 </button>
             </div>
 
-            {error && <p className="dm-error">{error}</p>}
+            {error && (
+                <div className="dm-error">
+                    <p>⚠️ {error.message}</p>
+                    {error.details && (
+                        <details>
+                            <summary>View details</summary>
+                            <pre>{JSON.stringify(error.details, null, 2)}</pre>
+                        </details>
+                    )}
+                </div>
+            )}
 
             {/* WYSIWYG Editor */}
             <div className="dm-editor-wrapper">

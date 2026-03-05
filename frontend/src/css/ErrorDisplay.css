@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
+
+.error-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.error-display {
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.error-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.error-display h3 {
+    color: #ff4444;
+    margin: 0 0 12px 0;
+    font-size: 1.5rem;
+}
+
+.error-display p {
+    color: var(--text-muted, #94a3b8);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.error-details {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #ef4444;
+    margin-bottom: 20px;
+    text-align: left;
+    overflow-x: auto;
+}
+
+.btn-retry {
+    background: var(--accent-primary, #6366f1);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-retry:hover {
+    background: var(--accent-hover, #4f46e5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}

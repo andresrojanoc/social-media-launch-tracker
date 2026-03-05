@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import companyService from '../services/companyService.js';
 import CompanyCard from './CompanyCard.jsx';
+import ErrorDisplay from './common/ErrorDisplay.jsx';
 import '../css/Dashboard.css';
 
 export default function Dashboard() {
@@ -8,17 +9,26 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        companyService.fetchCompanies()
-            .then(data => {
-                setCompanies(data.results ?? data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setLoading(false);
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await companyService.fetchCompanies();
+            setCompanies(data.results ?? data);
+        } catch (err) {
+            setError({
+                message: err.message,
+                status: err.status,
+                details: err.data
             });
+        } finally {
+            setLoading(false);
+        }
     }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     if (loading) return (
         <div className="dashboard-state">
@@ -28,10 +38,12 @@ export default function Dashboard() {
     );
 
     if (error) return (
-        <div className="dashboard-state error">
-            <p>⚠️ {error}</p>
-            <p className="hint">Make sure the Django backend is running on http://127.0.0.1:8000</p>
-        </div>
+        <ErrorDisplay
+            message={error.message}
+            status={error.status}
+            details={error.details}
+            onRetry={fetchData}
+        />
     );
 
     return (
