@@ -1,6 +1,8 @@
-# Launch Tracker Dashboard
+# 🚀 Launch Tracker Dashboard
 
-A custom dashboard that aggregates company launch videos and fundraise announcements from platforms like X, LinkedIn, and Crunchbase. It maps fundraise amounts, engagement metrics, enriched contact information, and automatically drafts outreach DMs for poorly performing launches.
+**Launch Tracker** is a premium monitoring tool that aggregates startup launches across X (Twitter) and LinkedIn. It tracks engagement metrics, provides enriched contact data, and helps automate outreach for companies that need a growth boost.
+
+---
 
 ---
 
@@ -51,6 +53,8 @@ dash-board/
 - **Enriched Contact Box** — Each company entry shows email, phone, LinkedIn, and X handles with clickable links.
 - **DM Draft Engine** — For launches with low engagement, generate a contextual outreach DM with one click and copy it to clipboard.
 - **Poor Performance Detection** — Launches below the engagement threshold are automatically flagged and surface the DM drafting prompt.
+- **Social Media Monitor** — Sync engagement metrics (likes/reactions) dynamically via a dedicated service with X and LinkedIn API integration (Mock).
+- **Post Analysis Search** — Analyze any X or LinkedIn post by URL to instantly view engagement stats and author info.
 
 ---
 
