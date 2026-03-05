@@ -1,0 +1,101 @@
+.dm-draft-prompt {
+    border-top: 1px solid rgba(239, 68, 68, 0.25);
+    padding-top: 1rem;
+}
+
+.dm-draft-prompt h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.dm-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.85rem;
+}
+
+.dm-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.dm-controls label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.dm-controls select {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-primary);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.btn-generate {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transition-speed);
+}
+
+.btn-generate:hover {
+    opacity: 0.85;
+}
+
+.btn-generate:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dm-error {
+    color: var(--danger-color);
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+}
+
+.dm-result {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dm-text {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.88rem;
+    font-family: inherit;
+    resize: none;
+    line-height: 1.6;
+}
+
+.btn-copy {
+    align-self: flex-end;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.btn-copy:hover {
+    background: rgba(255, 255, 255, 0.15);
+}

@@ -7,10 +7,10 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize Django project and `api` app in `backend/`
-- [ ] T002 Initialize React project (Vite or CRA) in `frontend/`
-- [ ] T003 [P] Configure Python environment and install Django/DRF dependencies
-- [ ] T004 [P] Configure Node environment and install frontend dependencies
+- [x] T001 Initialize Django project and `api` app in `backend/`
+- [x] T002 Initialize React project (Vite or CRA) in `frontend/`
+- [x] T003 [P] Configure Python environment and install Django/DRF dependencies
+- [x] T004 [P] Configure Node environment and install frontend dependencies
 
 ---
 
@@ -20,10 +20,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Setup PostgreSQL database connection in `backend/config/settings.py`
-- [ ] T006 Configure Django REST Framework and CORS headers in `backend/config/settings.py`
-- [ ] T007 [P] Create base API utility client in `frontend/src/utils/api.js`
-- [ ] T008 [P] Setup global custom CSS layout in `frontend/src/css/index.css`
+- [x] T005 Setup PostgreSQL database connection in `backend/config/settings.py`
+- [x] T006 Configure Django REST Framework and CORS headers in `backend/config/settings.py`
+- [x] T007 [P] Create base API utility client in `frontend/src/utils/api.js`
+- [x] T008 [P] Setup global custom CSS layout in `frontend/src/css/index.css`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 

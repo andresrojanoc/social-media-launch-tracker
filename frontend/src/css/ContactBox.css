@@ -1,0 +1,50 @@
+.contact-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.contact-box h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.contact-icon {
+    font-size: 1rem;
+}
+
+.contact-label {
+    color: var(--text-secondary);
+    min-width: 70px;
+}
+
+.contact-value {
+    color: var(--text-primary);
+}
+
+.contact-value.link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.contact-value.link:hover {
+    text-decoration: underline;
+}
