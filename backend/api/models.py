@@ -27,9 +27,10 @@ class LaunchEvent(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey(Company, related_name='launches', on_delete=models.CASCADE)
     platform = models.CharField(max_length=50, choices=PLATFORM_CHOICES)
+    post_url = models.URLField(max_length=500, null=True, blank=True)
     video_url = models.URLField(max_length=500, null=True, blank=True)
     likes_count = models.IntegerField(default=0)
-    engagement_status = models.CharField(max_length=10, choices=ENGAGEMENT_CHOICES, default='Good')
+    last_monitored_at = models.DateTimeField(null=True, blank=True)
     posted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

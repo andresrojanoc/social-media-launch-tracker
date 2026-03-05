@@ -67,12 +67,19 @@ def seed_data(count):
             platform = random.choice(platforms)
             likes = random.randint(0, 5000)
             status = "Good" if likes > 100 else "Poor" # Simple threshold for seed
+
+            post_url = None
+            if platform == "X":
+                x_post_id = f"192955{random.randint(1000000, 9999999)}"
+                post_url = f"https://x.com/startup/status/{x_post_id}"
+            elif platform == "LinkedIn":
+                post_url = f"https://www.linkedin.com/posts/launch-{c.name.lower().replace(' ', '-')}-{random.randint(1000, 9999)}"
             
             LaunchEvent.objects.create(
                 company=c,
                 platform=platform,
                 likes_count=likes,
-                engagement_status=status,
+                post_url=post_url,
                 video_url=f"https://{platform.lower()}.com/status/{random.randint(1000, 9999)}" if platform != "Crunchbase" else None
             )
             

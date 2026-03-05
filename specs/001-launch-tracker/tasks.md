@@ -182,3 +182,25 @@
 - [x] T046 [F] Enhance `api.js` to handle non-200 responses and network errors
 - [x] T047 [F] Create `ErrorDisplay` common component
 - [x] T048 [F] Integrate error handling into `Dashboard` and `DMDraftPrompt`
+
+---
+
+## Phase 11: Social Media Monitoring (User Request - Step 1013)
+
+**Purpose**: Automatically sync engagement metrics from X and LinkedIn.
+
+- [x] T049 [B] Update `LaunchEvent` model with `post_url` and `last_monitored_at`
+- [x] T050 [B] Implement `SocialMediaMonitor` in `services.py` with X/LinkedIn logic
+- [x] T051 [B] Integrate mocking for external API responses
+- [x] T052 [B] Add repository support for `LaunchEvent` model
+- [x] T053 [B] Add configuration settings for social media APIs
+
+---
+
+## Phase 12: Social Post Search Mock (User Request - Step 1121)
+
+**Purpose**: Allow users to "scrape" post info via URL (Mock).
+
+- [x] T054 [F] Create `SocialPostSearch` component and styles
+- [x] T055 [F] Implement mock scraping logic
+- [x] T056 [F] Integrate search bar into `Dashboard`

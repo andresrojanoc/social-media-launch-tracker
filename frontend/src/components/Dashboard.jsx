@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import companyService from '../services/companyService.js';
 import CompanyCard from './CompanyCard.jsx';
 import ErrorDisplay from './common/ErrorDisplay.jsx';
+import SocialPostSearch from './SocialPostSearch.jsx';
 import '../css/Dashboard.css';
 
 export default function Dashboard() {
@@ -51,6 +52,7 @@ export default function Dashboard() {
             <header className="dashboard-header">
                 <h1>🚀 Launch Tracker</h1>
                 <p className="subtitle">Monitor company launches, fundraises & engagement</p>
+                <SocialPostSearch />
             </header>
 
             {companies.length === 0 ? (

@@ -133,3 +133,7 @@ REST_FRAMEWORK = {
     ],
     'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',
 }
+
+# Social Media API Configuration
+X_API_BEARER_TOKEN = 'your_x_bearer_token_here'
+LINKEDIN_ACCESS_TOKEN = 'your_linkedin_access_token_here'
