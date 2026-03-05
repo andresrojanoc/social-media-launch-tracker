@@ -37,13 +37,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T009 [P] [US1] Create `Company` model in `backend/api/models.py`
-- [ ] T010 [P] [US1] Create `LaunchEvent` model in `backend/api/models.py`
-- [ ] T011 [US1] Create serializers for Company and LaunchEvent in `backend/api/serializers.py`
-- [ ] T012 [US1] Implement `GET /api/companies/` endpoint in `backend/api/views.py` and `urls.py`
-- [ ] T013 [P] [US1] Create `Dashboard` page component in `frontend/src/components/Dashboard.jsx`
-- [ ] T014 [P] [US1] Create `CompanyCard` and metric display components in `frontend/src/components/`
-- [ ] T015 [US1] Integrate `Dashboard` with `GET /api/companies/` using `api.js`
+- [x] T009 [P] [US1] Create `Company` model in `backend/api/models.py`
+- [x] T010 [P] [US1] Create `LaunchEvent` model in `backend/api/models.py`
+- [x] T011 [US1] Create serializers for Company and LaunchEvent in `backend/api/serializers.py`
+- [x] T012 [US1] Implement `GET /api/companies/` endpoint in `backend/api/views.py` and `urls.py`
+- [x] T013 [P] [US1] Create `Dashboard` page component in `frontend/src/components/Dashboard.jsx`
+- [x] T014 [P] [US1] Create `CompanyCard` and metric display components in `frontend/src/components/`
+- [x] T015 [US1] Integrate `Dashboard` with `GET /api/companies/` using `api.js`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -57,10 +57,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T016 [P] [US2] Create `ContactInfo` model in `backend/api/models.py`
-- [ ] T017 [US2] Update serializers in `backend/api/serializers.py` to embed `ContactInfo` in Company response
-- [ ] T018 [P] [US2] Create `ContactBox` UI component in `frontend/src/components/ContactBox.jsx`
-- [ ] T019 [US2] Integrate `ContactBox` into `CompanyCard` to display the contact data
+- [x] T016 [P] [US2] Create `ContactInfo` model in `backend/api/models.py`
+- [x] T017 [US2] Update serializers in `backend/api/serializers.py` to embed `ContactInfo` in Company response
+- [x] T018 [P] [US2] Create `ContactBox` UI component in `frontend/src/components/ContactBox.jsx`
+- [x] T019 [US2] Integrate `ContactBox` into `CompanyCard` to display the contact data
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -74,11 +74,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T020 [P] [US3] Create `DM_Draft` model in `backend/api/models.py`
-- [ ] T021 [US3] Implement logic to determine "poor performance" threshold in `backend/api/services.py`
-- [ ] T022 [US3] Implement `POST /api/companies/{id}/draft_dm/` endpoint in `backend/api/views.py`
-- [ ] T023 [P] [US3] Create `DMDraftPrompt` UI component in `frontend/src/components/DMDraftPrompt.jsx`
-- [ ] T024 [US3] Integrate `DMDraftPrompt` to trigger the POST endpoint and display the copy-paste text
+- [x] T020 [P] [US3] Create `DM_Draft` model in `backend/api/models.py`
+- [x] T021 [US3] Implement logic to determine "poor performance" threshold in `backend/api/services.py`
+- [x] T022 [US3] Implement `POST /api/companies/{id}/draft_dm/` endpoint in `backend/api/views.py`
+- [x] T023 [P] [US3] Create `DMDraftPrompt` UI component in `frontend/src/components/DMDraftPrompt.jsx`
+- [x] T024 [US3] Integrate `DMDraftPrompt` to trigger the POST endpoint and display the copy-paste text
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -88,8 +88,8 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T025 [P] Comprehensive UI styling improvements in `frontend/src/css/`
-- [ ] T026 [P] Add error boundaries and loading states in React components
+- [x] T025 [P] Comprehensive UI styling improvements in `frontend/src/css/`
+- [x] T026 [P] Add error boundaries and loading states in React components
 - [ ] T027 Update README.md with run instructions based on `quickstart.md`
 - [ ] T028 Verify all manual testing scenarios pass
 

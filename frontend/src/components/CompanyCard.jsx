@@ -20,14 +20,51 @@ function PlatformBadge({ platform }) {
     );
 }
 
+function CompanyThumbnail({ thumbnailUrl, name }) {
+    const [imgError, setImgError] = useState(false);
+
+    if (!thumbnailUrl || imgError) {
+        // Fallback: colored initials avatar
+        const initials = name
+            .split(' ')
+            .map(w => w[0])
+            .slice(0, 2)
+            .join('')
+            .toUpperCase();
+        return (
+            <div className="company-thumbnail placeholder" aria-label={name}>
+                {initials}
+            </div>
+        );
+    }
+
+    return (
+        <img
+            src={thumbnailUrl}
+            alt={`${name} thumbnail`}
+            className="company-thumbnail"
+            onError={() => setImgError(true)}
+        />
+    );
+}
+
 export default function CompanyCard({ company }) {
     const poorLaunches = company.launches?.filter(l => l.engagement_status === 'Poor') || [];
 
     return (
         <article className="company-card card">
-            {/* Header */}
+            {/* Thumbnail + Header */}
             <div className="card-header">
-                <h2 className="company-name">{company.name}</h2>
+                <CompanyThumbnail
+                    thumbnailUrl={company.thumbnail_url}
+                    name={company.name}
+                />
+                <div className="card-title-group">
+                    <h2 className="company-name">{company.name}</h2>
+                    {company.description && (
+                        <p className="company-description">{company.description}</p>
+                    )}
+                </div>
                 <div className="raised-badge">
                     <span className="raised-label">Total Raised</span>
                     <span className="raised-value">{formatRaised(company.amount_raised)}</span>
