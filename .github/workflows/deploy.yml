@@ -6,7 +6,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: us-central1
-  REPO_NAME: launch-tracker
+  REPO_NAME: social-media-launch-tracker
 
 jobs:
   deploy:
