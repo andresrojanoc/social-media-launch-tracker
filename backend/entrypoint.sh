@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# Run migrations
-echo "Running migrations..."
+# Exit on error
+set -e
+
+echo "--- Running Migrations ---"
 python manage.py migrate --noinput
 
-# Run seeding (optional)
-# Uncomment the following line if you want to seed the database on every start
-# echo "Running seeding..."
-# python seed_data.py
+echo "--- Seeding Database ---"
+python seed_data.py --count 10
 
-# Execute the main command (Gunicorn)
-exec "$@"
+echo "--- Starting Gunicorn ---"
+exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 8 --timeout 0 config.wsgi:application

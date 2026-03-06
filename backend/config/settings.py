@@ -78,12 +78,33 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Database settings
+# Use PostgreSQL in production (Google Cloud SQL) and SQLite for local development.
+
+DB_NAME = os.environ.get("DB_NAME")
+DB_USER = os.environ.get("DB_USER")
+DB_PASS = os.environ.get("DB_PASS")
+INSTANCE_CONNECTION_NAME = os.environ.get("INSTANCE_CONNECTION_NAME")
+
+if INSTANCE_CONNECTION_NAME:
+    # PRODUCTION (Google Cloud SQL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASS,
+            'HOST': f'/cloudsql/{INSTANCE_CONNECTION_NAME}',
+        }
     }
-}
+else:
+    # DEVELOPMENT (Local)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -134,6 +155,8 @@ if DEBUG or os.environ.get('CORS_ALLOW_ALL_ORIGINS') == 'True':
     CORS_ALLOW_ALL_ORIGINS = True
 else:
     CORS_ALLOWED_ORIGINS = [
+        'https://frontend-dashboard-792495254142.us-central1.run.app',
+    ] + [
         origin.strip() for origin in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()
     ]
 
