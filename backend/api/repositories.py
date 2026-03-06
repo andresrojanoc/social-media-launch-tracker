@@ -17,7 +17,7 @@ class ICompanyRepository(ABC):
         pass
 
     @abstractmethod
-    def create_company(self, name: str, description: str = None, amount_raised: float = None) -> Company:
+    def create_company(self, name: str, description: str = None, amount_raised: float = None, logo_url: str = None) -> Company:
         pass
 
 class IDMRepository(ABC):
@@ -60,11 +60,12 @@ class DjangoCompanyRepository(ICompanyRepository):
         except Company.DoesNotExist:
             return False
 
-    def create_company(self, name: str, description: str = None, amount_raised: float = None) -> Company:
+    def create_company(self, name: str, description: str = None, amount_raised: float = None, logo_url: str = None) -> Company:
         return Company.objects.create(
             name=name,
             description=description,
-            amount_raised=amount_raised
+            amount_raised=amount_raised,
+            thumbnail_url=logo_url
         )
 
 class DjangoDMRepository(IDMRepository):

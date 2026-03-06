@@ -156,15 +156,21 @@ class CompanyService:
         """
         Creates a new company and its first launch event from search data.
         """
-        name = data.get('author', 'Unknown Author')
-        # Simple heuristic for description or raised amount if we had more info
-        company = self.repository.create_company(name=name)
+        name = data.get('name', data.get('author', 'Unknown Author'))
+        description = data.get('description', '')
+        logo_url = data.get('logo_url', '')
+        
+        company = self.repository.create_company(
+            name=name, 
+            description=description,
+            logo_url=logo_url
+        )
         
         launch_repo = get_launch_repository()
         launch_repo.create_launch(
             company=company,
             platform=data.get('platform', 'X'),
-            post_url=data.get('url', ''), # Need to ensure url is passed
+            post_url=data.get('url', ''),
             likes_count=data.get('likes', 0)
         )
         return company

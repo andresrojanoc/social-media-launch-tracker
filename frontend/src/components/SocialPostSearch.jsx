@@ -6,6 +6,31 @@ export default function SocialPostSearch({ onRefresh }) {
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
+    const [error, setError] = useState('');
+
+    const isRandomString = (str) => {
+        // Simple heuristic: if it has 3+ consecutive consonants or too many numbers/special chars
+        if (str.length < 2) return true;
+        const consonants = str.match(/[^aeiou\d\s\W]{3,}/i);
+        const tooManyNumbers = (str.match(/\d/g) || []).length > str.length / 2;
+        return !!consonants || tooManyNumbers;
+    };
+
+    const generateSVGLogo = (name) => {
+        if (!name || name.length < 2 || isRandomString(name)) return null;
+        const firstChar = name.charAt(0).toUpperCase();
+        const colors = ['#2563eb', '#ef4444', '#10b981', '#f59e0b', '#6366f1', '#ec4899'];
+        const color = colors[name.length % colors.length];
+
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                <rect width="100" height="100" rx="20" fill="${color}" />
+                <text x="50" y="65" font-family="Arial, sans-serif" font-size="50" font-weight="bold" fill="white" text-anchor="middle">${firstChar}</text>
+            </svg>
+        `.trim();
+
+        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -13,46 +38,51 @@ export default function SocialPostSearch({ onRefresh }) {
 
         setLoading(true);
         setResult(null);
+        setError('');
 
-        // Mock "Scraping" delay
+        const isX = url.includes('x.com') || url.includes('twitter.com');
+        const isLinkedIn = url.includes('linkedin.com');
+
+        if (!isX && !isLinkedIn) {
+            setError('Invalid URL. Please provide a valid X (Twitter) or LinkedIn post URL.');
+            setLoading(false);
+            return;
+        }
+
         setTimeout(() => {
-            const isX = url.includes('x.com') || url.includes('twitter.com');
-            const isLinkedIn = url.includes('linkedin.com');
 
-            let mockData = null;
+            let username = 'Unknown';
+            let platformName = 'Social Media';
 
             if (isX) {
-                mockData = {
-                    platform: 'X',
-                    id: url.split('/').pop()?.split('?')[0] || '1929554635544461727',
-                    author: '@startup_visionary',
-                    likes: Math.floor(Math.random() * 5000) + 100,
-                    retweets: Math.floor(Math.random() * 1000) + 20,
-                    content: "Excited to finally share what we've been building for the last 18 months! 🚀 The future of AI collaboration is here. #launch #startup"
-                };
+                // Extract from status/id or profile
+                const xMatch = url.match(/(?:x\.com|twitter\.com)\/([^\/]+)/);
+                username = xMatch ? xMatch[1] : 'Unknown';
+                platformName = 'X';
             } else if (isLinkedIn) {
-                mockData = {
-                    platform: 'LinkedIn',
-                    id: 'share_82736451920',
-                    author: 'John Doe, CEO @ VentureStream',
-                    likes: Math.floor(Math.random() * 2000) + 50,
-                    comments: Math.floor(Math.random() * 300) + 15,
-                    content: "Today marks a major milestone. We are officially opening our early access program. Thank you to the team for the incredible hard work! 💼✨"
-                };
-            } else {
-                // Default fallback if URL doesn't match
-                mockData = {
-                    platform: 'Social Media',
-                    id: 'unknown',
-                    author: 'Post Author',
-                    likes: 120,
-                    content: "General post preview for the provided URL..."
-                };
+                const liMatch = url.match(/linkedin\.com\/(?:in|posts|status)\/([^\/\?]+)/);
+                username = liMatch ? liMatch[1] : 'User';
+                platformName = 'LinkedIn';
             }
 
-            setResult({ ...mockData, url }); // Store URL for Include logic
+            const logo = generateSVGLogo(username);
+
+            const mockData = {
+                name: username,
+                platform: platformName,
+                id: url.split('/').pop()?.split('?')[0] || Math.random().toString(36).substr(2, 9),
+                author: username,
+                likes: Math.floor(Math.random() * 5000) + 100,
+                content: `Extracted data from ${platformName} for user: ${username}`,
+                logo_url: logo,
+                profile_x: `https://x.com/${username}`,
+                profile_linkedin: `https://www.linkedin.com/in/${username}`,
+                url: url
+            };
+
+            setResult(mockData);
             setLoading(false);
-        }, 1500);
+        }, 1200);
     };
 
     const handleDiscard = () => {
@@ -64,8 +94,16 @@ export default function SocialPostSearch({ onRefresh }) {
         if (!result) return;
         setLoading(true);
         try {
-            await companyService.createCompany(result);
-            handleDiscard(); // Clear state
+            // Note: backend CompanyService.create_company_entry handles name/description
+            await companyService.createCompany({
+                name: result.name,
+                description: result.content,
+                logo_url: result.logo_url,
+                url: result.url,
+                platform: result.platform,
+                likes: result.likes
+            });
+            handleDiscard();
             if (onRefresh) onRefresh();
         } catch (error) {
             alert('Failed to include company. Please try again.');
@@ -88,64 +126,65 @@ export default function SocialPostSearch({ onRefresh }) {
                     {loading ? (
                         <div className="scraping-loader">
                             <div className="mini-spinner"></div>
-                            <span>Scraping...</span>
+                            <span>Parsing...</span>
                         </div>
                     ) : (
                         <>
                             <span>🔍</span>
-                            <span>Analyze Post</span>
+                            <span>Analyze URL</span>
                         </>
                     )}
                 </button>
             </form>
 
+            {error && (
+                <div className="search-error-message" style={{ color: '#ef4444', marginTop: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>
+                    ⚠️ {error}
+                </div>
+            )}
+
             {result && (
                 <div className="search-result-card card">
-                    <div className="result-header">
-                        <div className="platform-info">
-                            <span>{result.platform === 'X' ? '𝕏' : 'in'}</span>
-                            <span>{result.platform} Post Analysis</span>
+                    <div className="card-header">
+                        {result.logo_url ? (
+                            <img src={result.logo_url} alt="Logo" className="company-thumbnail" />
+                        ) : (
+                            <div className="company-thumbnail placeholder">
+                                {result.name.charAt(0).toUpperCase()}
+                            </div>
+                        )}
+                        <div className="card-title-group">
+                            <h2 className="company-name">{result.name}</h2>
+                            <p className="company-description">Platform: {result.platform}</p>
                         </div>
-                        <span className="post-id">ID: {result.id}</span>
-                    </div>
-
-                    <div className="author-name">
-                        <strong>Author:</strong> {result.author}
                     </div>
 
                     <div className="post-content-preview">
-                        "{result.content}"
+                        <strong>Extracted From:</strong> {result.url}
+                    </div>
+
+                    <div className="profile-links" style={{ display: 'flex', gap: '1rem', margin: '1rem 0', fontSize: '0.85rem' }}>
+                        <a href={result.profile_x} target="_blank" rel="noreferrer" style={{ color: '#1d9bf0' }}>X Profile</a>
+                        <a href={result.profile_linkedin} target="_blank" rel="noreferrer" style={{ color: '#0a66c2' }}>LinkedIn Profile</a>
                     </div>
 
                     <div className="result-metrics">
                         <div className="metric-item">
-                            <span className="metric-label">Likes / Reactions</span>
+                            <span className="metric-label">Estimated Engagement</span>
                             <span className="metric-number">❤️ {result.likes.toLocaleString()}</span>
                         </div>
-                        {result.retweets && (
-                            <div className="metric-item">
-                                <span className="metric-label">Retweets</span>
-                                <span className="metric-number">🔁 {result.retweets.toLocaleString()}</span>
-                            </div>
-                        )}
-                        {result.comments && (
-                            <div className="metric-item">
-                                <span className="metric-label">Comments</span>
-                                <span className="metric-number">💬 {result.comments.toLocaleString()}</span>
-                            </div>
-                        )}
                     </div>
 
                     <div className="result-actions">
                         <button
-                            className="include-button premium-button"
+                            className="include-button"
                             onClick={handleInclude}
                             disabled={loading}
                         >
                             {loading ? 'Processing...' : '✔ Include in Dashboard'}
                         </button>
                         <button
-                            className="discard-button secondary-button"
+                            className="discard-button"
                             onClick={handleDiscard}
                             disabled={loading}
                         >
@@ -154,6 +193,6 @@ export default function SocialPostSearch({ onRefresh }) {
                     </div>
                 </div>
             )}
-        </div >
+        </div>
     );
 }
