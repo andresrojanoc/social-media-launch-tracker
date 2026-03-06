@@ -19,4 +19,4 @@ RUN chmod +x /app/entrypoint.sh
 EXPOSE 8080
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-CMD ["gunicorn", "--bind", ":8080", "config.wsgi:application"]
+CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 8 --timeout 0 config.wsgi:application
