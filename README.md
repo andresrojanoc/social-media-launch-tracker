@@ -8,12 +8,12 @@
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Backend API | Django + Django REST Framework |
-| Database | SQLite (dev) / PostgreSQL (prod) |
-| Frontend | React (Vite) |
-| Styling | Custom CSS |
+| Layer       | Technology                       |
+| ----------- | -------------------------------- |
+| Backend API | Django + Django REST Framework   |
+| Database    | SQLite (dev) / PostgreSQL (prod) |
+| Frontend    | React (Vite)                     |
+| Styling     | Custom CSS                       |
 
 ---
 
@@ -63,20 +63,31 @@ dash-board/
 If you just cloned the repository, you need to install dependencies for both the root (orchestrator), frontend, and backend:
 
 ### 1. Root & Frontend Dependencies
+
 Run this in the project root:
+
 ```bash
 npm install && cd frontend && npm install && cd ..
 ```
-*Note: For older versions of PowerShell (pre-v7), use `;` instead of `&&`:*
+
+_Note: For older versions of PowerShell (pre-v7), use `;` instead of `&&`:_
 `npm install; cd frontend; npm install; cd ..`
 
 ### 2. Backend Virtual Environment
-Run these commands in the project root:
+
+Run this command in the project root:
+
 ```bash
-cd backend && python -m venv venv && .\venv\Scripts\activate && pip install -r requirements.txt && python manage.py migrate && cd ..
+npm run setup:backend
 ```
-*Note: For older versions of PowerShell (pre-v7), use `;` instead of `&&`:*
-`cd backend; python -m venv venv; .\venv\Scripts\activate; pip install -r requirements.txt; python manage.py migrate; cd ..`
+
+### 3. Verify Setup
+
+Run this script to ensure Node.js, Python 3.10+, and all dependencies are installed and configured:
+
+```bash
+npm run verify
+```
 
 ---
 
@@ -104,7 +115,7 @@ npm run dev
 If you prefer to run it separately:
 
 ```bash
-backend\venv\Scripts\python.exe backend\manage.py runserver
+npm run dev:backend
 ```
 
 The Django API will be available at: `http://127.0.0.1:8000/api/companies/`
@@ -116,7 +127,7 @@ The Django API will be available at: `http://127.0.0.1:8000/api/companies/`
 If you prefer to run it separately:
 
 ```bash
-cmd /c "cd frontend && npm run dev"
+npm run dev:frontend
 ```
 
 The React app will be available at: `http://localhost:5173`
@@ -128,16 +139,16 @@ The React app will be available at: `http://localhost:5173`
 To populate the database with 3 sample companies for testing:
 
 ```bash
-backend\venv\Scripts\python.exe backend\seed_data.py
+npm run seed:backend
 ```
 
 ---
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/companies/` | List all companies with launches and contact info |
+| Method | Endpoint                        | Description                                        |
+| ------ | ------------------------------- | -------------------------------------------------- |
+| `GET`  | `/api/companies/`               | List all companies with launches and contact info  |
 | `POST` | `/api/companies/{id}/draft_dm/` | Generate a DM draft for a poorly performing launch |
 
 ### Example `POST /api/companies/{id}/draft_dm/` Request

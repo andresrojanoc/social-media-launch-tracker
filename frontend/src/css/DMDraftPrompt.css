@@ -39,24 +39,33 @@
 }
 
 .btn-generate {
-    background: var(--primary-color);
+    /* Extending .btn-primary logic but locally defined for specificity if needed */
+    background: var(--primary-gradient);
     color: white;
     border: none;
-    border-radius: 6px;
-    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    padding: 0.5rem 1.25rem;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: opacity var(--transition-speed);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .btn-generate:hover {
-    opacity: 0.85;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    filter: brightness(1.1);
 }
 
 .btn-generate:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .dm-error {
@@ -155,10 +164,12 @@
 /* Placeholder */
 .dm-editor .tiptap p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
-    color: rgba(148, 163, 184, 0.45);
+    color: rgba(148, 163, 184, 0.65);
+    /* Increased contrast */
     float: left;
     height: 0;
     pointer-events: none;
+    font-style: italic;
 }
 
 /* Copy & Send buttons */

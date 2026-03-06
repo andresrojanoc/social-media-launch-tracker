@@ -5,7 +5,10 @@
   "scripts": {
     "dev:backend": "cd backend && venv\\Scripts\\python.exe manage.py runserver",
     "dev:frontend": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "setup:backend": "cd backend && python -m venv venv && venv\\Scripts\\activate && pip install -r requirements.txt && venv\\Scripts\\python.exe manage.py migrate",
+    "seed:backend": "backend\\venv\\Scripts\\python.exe backend\\seed_data.py",
+    "verify": "node verify-env.js"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

@@ -75,7 +75,12 @@ export default function CompanyCard({ company, onDelete }) {
                 disabled={deleting}
                 title="Delete Company"
             >
-                {deleting ? '...' : '×'}
+                {deleting ? '...' : (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                )}
             </button>
             {/* Thumbnail + Header */}
             <div className="card-header">

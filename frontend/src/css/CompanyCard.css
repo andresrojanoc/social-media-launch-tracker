@@ -50,6 +50,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     overflow: hidden;
 }
 
@@ -57,61 +58,76 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    background: rgba(37, 99, 235, 0.15);
-    border: 1px solid rgba(37, 99, 235, 0.3);
+    background: rgba(37, 99, 235, 0.08);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(37, 99, 235, 0.2);
     border-radius: 8px;
-    padding: 0.4rem 0.75rem;
+    padding: 0.5rem 0.85rem;
     min-width: 110px;
     text-align: center;
     margin-top: 1.5rem;
-    /* Move down to avoid overlapping with delete button */
+    transition: border-color 0.2s ease;
+}
+
+.raised-badge:hover {
+    border-color: rgba(37, 99, 235, 0.5);
 }
 
 .raised-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     color: var(--text-secondary);
+    opacity: 0.8;
 }
 
 .raised-value {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary-color);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #60a5fa;
+    /* Brighter blue for better contrast */
+    text-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
 }
 
 .launches-section h3 {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     color: var(--text-secondary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
+    opacity: 0.7;
 }
 
 .launches-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .launch-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 0.75rem;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 0.8rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.launch-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .launch-row.poor {
-    border-color: rgba(239, 68, 68, 0.3);
-    background: rgba(239, 68, 68, 0.05);
+    border-color: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.03);
 }
 
 .launch-row.good {
-    border-color: rgba(16, 185, 129, 0.3);
-    background: rgba(16, 185, 129, 0.05);
+    border-color: rgba(16, 185, 129, 0.2);
+    background: rgba(16, 185, 129, 0.03);
 }
 
 .platform-badge {
@@ -221,6 +237,9 @@
     right: 12px;
     width: 24px;
     height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
     border-radius: 50%;
     background: #ef4444;
     border: none;
@@ -229,21 +248,12 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
     transition: all 0.2s ease;
     z-index: 10;
-    line-height: 1;
 }
 
 .delete-card-button:hover {
     background: #dc2626;
-    transform: scale(1.1);
-}
-
-.delete-card-button:hover {
-    background: #ef4444;
-    color: white;
     transform: scale(1.1);
 }
 

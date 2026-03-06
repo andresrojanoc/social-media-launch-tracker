@@ -12,6 +12,14 @@
     --danger-color: #ef4444;
     --border-radius: 12px;
     --transition-speed: 0.25s;
+
+    /* Glassmorphism Tokens */
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: blur(12px);
+    --primary-gradient: linear-gradient(135deg, #2563eb, #3b82f6);
+    --glow-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    --primary-glow: 0 0 20px rgba(37, 99, 235, 0.2);
 }
 
 * {
@@ -39,17 +47,57 @@ body {
 
 /* Card Styling */
 .card {
-    background-color: var(--card-bg);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border-radius: var(--border-radius);
     padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    box-shadow: var(--glow-shadow);
+    border: 1px solid var(--glass-border);
+    transition: transform var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow var(--transition-speed) ease,
+        border-color var(--transition-speed) ease;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Button UI System */
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 /* Typography Basics */
