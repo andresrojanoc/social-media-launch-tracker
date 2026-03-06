@@ -94,7 +94,6 @@ export default function SocialPostSearch({ onRefresh }) {
         if (!result) return;
         setLoading(true);
         try {
-            // Note: backend CompanyService.create_company_entry handles name/description
             await companyService.createCompany({
                 name: result.name,
                 description: result.content,
@@ -106,7 +105,11 @@ export default function SocialPostSearch({ onRefresh }) {
             handleDiscard();
             if (onRefresh) onRefresh();
         } catch (error) {
-            alert('Failed to include company. Please try again.');
+            if (error.response?.data?.error) {
+                setError(error.response.data.error);
+            } else {
+                alert('Failed to include company. Please try again.');
+            }
         } finally {
             setLoading(false);
         }

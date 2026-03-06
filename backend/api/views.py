@@ -49,9 +49,12 @@ class CompanyViewSet(viewsets.ModelViewSet):
         POST /api/companies/
         Expects search data to create a new company entry.
         """
-        company = self.company_service.create_company_entry(request.data)
-        serializer = self.get_serializer(company)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        try:
+            company = self.company_service.create_company_entry(request.data)
+            serializer = self.get_serializer(company)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'], url_path='draft_dm')
     def draft_dm(self, request, pk=None):

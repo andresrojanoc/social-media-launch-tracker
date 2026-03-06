@@ -157,6 +157,12 @@ class CompanyService:
         Creates a new company and its first launch event from search data.
         """
         name = data.get('name', data.get('author', 'Unknown Author'))
+        
+        # Check for duplication
+        existing = Company.objects.filter(name__iexact=name).first()
+        if existing:
+            raise ValueError(f"Company '{name}' is already included in the dashboard")
+
         description = data.get('description', '')
         logo_url = data.get('logo_url', '')
         
