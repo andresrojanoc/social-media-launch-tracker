@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import companyService from '../services/companyService.js';
 import ContactBox from './ContactBox.jsx';
 import DMDraftPrompt from './DMDraftPrompt.jsx';
 import '../css/CompanyCard.css';
@@ -48,11 +49,34 @@ function CompanyThumbnail({ thumbnailUrl, name }) {
     );
 }
 
-export default function CompanyCard({ company }) {
+export default function CompanyCard({ company, onDelete }) {
+    const [deleting, setDeleting] = useState(false);
     const poorLaunches = company.launches?.filter(l => l.engagement_status === 'Poor') || [];
 
+    const handleDelete = async () => {
+        if (!window.confirm(`Are you sure you want to delete ${company.name}?`)) return;
+
+        setDeleting(true);
+        try {
+            await companyService.deleteCompany(company.id);
+            if (onDelete) onDelete();
+        } catch (error) {
+            alert('Failed to delete company. Please try again.');
+        } finally {
+            setDeleting(false);
+        }
+    };
+
     return (
-        <article className="company-card card">
+        <article className={`company-card card ${deleting ? 'deleting' : ''}`}>
+            <button
+                className="delete-card-button"
+                onClick={handleDelete}
+                disabled={deleting}
+                title="Delete Company"
+            >
+                {deleting ? '...' : '×'}
+            </button>
             {/* Thumbnail + Header */}
             <div className="card-header">
                 <CompanyThumbnail

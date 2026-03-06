@@ -5,7 +5,7 @@ from django.http import Http404
 from .serializers import CompanySerializer
 from .services import get_company_service, get_dm_service
 
-class CompanyViewSet(viewsets.ReadOnlyModelViewSet):
+class CompanyViewSet(viewsets.ModelViewSet):
     """
     ViewSet for Company entities. 
     Handles HTTP concerns and delegates business logic to Service Layer.
@@ -33,6 +33,25 @@ class CompanyViewSet(viewsets.ReadOnlyModelViewSet):
         if not company:
             raise Http404
         return company
+
+    def destroy(self, request, *args, **kwargs):
+        """
+        DELETE /api/companies/{id}/
+        """
+        pk = kwargs.get('pk')
+        success = self.company_service.delete_company(pk)
+        if success:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'error': 'Company not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def create(self, request, *args, **kwargs):
+        """
+        POST /api/companies/
+        Expects search data to create a new company entry.
+        """
+        company = self.company_service.create_company_entry(request.data)
+        serializer = self.get_serializer(company)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['post'], url_path='draft_dm')
     def draft_dm(self, request, pk=None):

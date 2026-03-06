@@ -149,6 +149,26 @@ class CompanyService:
     def get_company_by_id(self, company_id: str):
         return self.repository.get_by_id(company_id)
 
+    def delete_company(self, company_id: str) -> bool:
+        return self.repository.delete_company(company_id)
+
+    def create_company_entry(self, data: dict) -> Company:
+        """
+        Creates a new company and its first launch event from search data.
+        """
+        name = data.get('author', 'Unknown Author')
+        # Simple heuristic for description or raised amount if we had more info
+        company = self.repository.create_company(name=name)
+        
+        launch_repo = get_launch_repository()
+        launch_repo.create_launch(
+            company=company,
+            platform=data.get('platform', 'X'),
+            post_url=data.get('url', ''), # Need to ensure url is passed
+            likes_count=data.get('likes', 0)
+        )
+        return company
+
 # Providers
 def get_dm_service() -> DMService:
     return DMService()

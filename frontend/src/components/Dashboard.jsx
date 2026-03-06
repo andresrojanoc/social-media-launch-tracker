@@ -52,7 +52,7 @@ export default function Dashboard() {
             <header className="dashboard-header">
                 <h1>🚀 Launch Tracker</h1>
                 <p className="subtitle">Monitor company launches, fundraises & engagement</p>
-                <SocialPostSearch />
+                <SocialPostSearch onRefresh={fetchData} />
             </header>
 
             {companies.length === 0 ? (
@@ -62,7 +62,11 @@ export default function Dashboard() {
             ) : (
                 <div className="company-grid">
                     {companies.map(company => (
-                        <CompanyCard key={company.id} company={company} />
+                        <CompanyCard
+                            key={company.id}
+                            company={company}
+                            onDelete={fetchData}
+                        />
                     ))}
                 </div>
             )}

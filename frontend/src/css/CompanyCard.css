@@ -63,6 +63,8 @@
     padding: 0.4rem 0.75rem;
     min-width: 110px;
     text-align: center;
+    margin-top: 1.5rem;
+    /* Move down to avoid overlapping with delete button */
 }
 
 .raised-label {
@@ -206,4 +208,52 @@
     .launch-metrics {
         flex-direction: column;
     }
+}
+
+/* Delete Button */
+.company-card {
+    position: relative;
+}
+
+.delete-card-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ef4444;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    z-index: 10;
+    line-height: 1;
+}
+
+.delete-card-button:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+.delete-card-button:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+}
+
+.delete-card-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.company-card.deleting {
+    opacity: 0.6;
+    pointer-events: none;
+    filter: grayscale(0.5);
 }

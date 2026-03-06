@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import companyService from '../services/companyService.js';
 import '../css/SocialPostSearch.css';
 
-export default function SocialPostSearch() {
+export default function SocialPostSearch({ onRefresh }) {
     const [url, setUrl] = useState('');
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
@@ -49,9 +50,28 @@ export default function SocialPostSearch() {
                 };
             }
 
-            setResult(mockData);
+            setResult({ ...mockData, url }); // Store URL for Include logic
             setLoading(false);
         }, 1500);
+    };
+
+    const handleDiscard = () => {
+        setResult(null);
+        setUrl('');
+    };
+
+    const handleInclude = async () => {
+        if (!result) return;
+        setLoading(true);
+        try {
+            await companyService.createCompany(result);
+            handleDiscard(); // Clear state
+            if (onRefresh) onRefresh();
+        } catch (error) {
+            alert('Failed to include company. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -114,15 +134,26 @@ export default function SocialPostSearch() {
                                 <span className="metric-number">💬 {result.comments.toLocaleString()}</span>
                             </div>
                         )}
-                        <div className="metric-item">
-                            <span className="metric-label">Engagement</span>
-                            <span className="metric-number" style={{ color: result.likes > 100 ? 'var(--success-color)' : 'var(--warning-color)' }}>
-                                {result.likes > 100 ? '🔥 High' : '⚖️ Normal'}
-                            </span>
-                        </div>
+                    </div>
+
+                    <div className="result-actions">
+                        <button
+                            className="include-button premium-button"
+                            onClick={handleInclude}
+                            disabled={loading}
+                        >
+                            {loading ? 'Processing...' : '✔ Include in Dashboard'}
+                        </button>
+                        <button
+                            className="discard-button secondary-button"
+                            onClick={handleDiscard}
+                            disabled={loading}
+                        >
+                            ✖ Discard
+                        </button>
                     </div>
                 </div>
             )}
-        </div>
+        </div >
     );
 }

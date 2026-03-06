@@ -31,6 +31,32 @@ const companyService = {
             console.error('Error generating draft:', error);
             throw error;
         }
+    },
+
+    /**
+     * Deletes a company.
+     * @param {string} companyId 
+     */
+    async deleteCompany(companyId) {
+        try {
+            return await apiClient.delete(`/companies/${companyId}/`);
+        } catch (error) {
+            console.error('Error deleting company:', error);
+            throw error;
+        }
+    },
+
+    /**
+     * Creates a new company entry from search data.
+     * @param {Object} data 
+     */
+    async createCompany(data) {
+        try {
+            return await apiClient.post('/companies/', data);
+        } catch (error) {
+            console.error('Error creating company:', error);
+            throw error;
+        }
     }
 };
 

@@ -54,6 +54,20 @@ export const apiClient = {
             if (error instanceof ApiError) throw error;
             throw new ApiError('Network error: Unable to connect to the server.', 0, null);
         }
+    },
+
+    async delete(endpoint) {
+        try {
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                method: 'DELETE',
+            });
+            // DELETE requests normally return 204 No Content, which response.json() fails on
+            if (response.status === 204) return null;
+            return await handleResponse(response);
+        } catch (error) {
+            if (error instanceof ApiError) throw error;
+            throw new ApiError('Network error: Unable to connect to the server.', 0, null);
+        }
     }
 };
 
