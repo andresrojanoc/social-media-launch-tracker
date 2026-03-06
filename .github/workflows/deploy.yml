@@ -62,4 +62,5 @@ jobs:
           gcloud run deploy frontend-dashboard \
             --image $REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/frontend:latest \
             --region $REGION \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port 8080
