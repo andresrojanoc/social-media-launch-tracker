@@ -58,6 +58,28 @@ dash-board/
 
 ---
 
+## First Time Setup (New Clones)
+
+If you just cloned the repository, you need to install dependencies for both the root (orchestrator), frontend, and backend:
+
+### 1. Root & Frontend Dependencies
+Run this in the project root:
+```bash
+npm install && cd frontend && npm install && cd ..
+```
+*Note: For older versions of PowerShell (pre-v7), use `;` instead of `&&`:*
+`npm install; cd frontend; npm install; cd ..`
+
+### 2. Backend Virtual Environment
+Run these commands in the project root:
+```bash
+cd backend && python -m venv venv && .\venv\Scripts\activate && pip install -r requirements.txt && cd ..
+```
+*Note: For older versions of PowerShell (pre-v7), use `;` instead of `&&`:*
+`cd backend; python -m venv venv; .\venv\Scripts\activate; pip install -r requirements.txt; cd ..`
+
+---
+
 ## How to Run
 
 ### Quick Start (Recommended)
