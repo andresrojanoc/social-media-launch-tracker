@@ -56,6 +56,15 @@ class CompanyViewSet(viewsets.ModelViewSet):
         except ValueError as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=False, methods=['post'], url_path='reset')
+    def reset(self, request):
+        """
+        POST /api/companies/reset/
+        Restores the dashboard to its initial state.
+        """
+        self.company_service.reset_dashboard()
+        return Response({'message': 'Dashboard reset to initial state'}, status=status.HTTP_200_OK)
+
     @action(detail=True, methods=['post'], url_path='draft_dm')
     def draft_dm(self, request, pk=None):
         """

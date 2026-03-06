@@ -47,6 +47,20 @@ export default function Dashboard() {
         />
     );
 
+    const handleReset = async () => {
+        if (!window.confirm('This will delete all current entries and restore the dashboard to its original state. Are you sure?')) return;
+
+        setLoading(true);
+        try {
+            await companyService.resetDashboard();
+            await fetchData();
+        } catch (err) {
+            alert('Failed to reset dashboard. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="dashboard-container">
             <header className="dashboard-header">
@@ -70,6 +84,16 @@ export default function Dashboard() {
                     ))}
                 </div>
             )}
+
+            <footer className="dashboard-footer">
+                <button
+                    className="reset-dashboard-button"
+                    onClick={handleReset}
+                    disabled={loading}
+                >
+                    🔄 Reset Dashboard to Initial State
+                </button>
+            </footer>
         </div>
     );
 }

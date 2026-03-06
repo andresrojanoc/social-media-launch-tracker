@@ -57,6 +57,18 @@ const companyService = {
             console.error('Error creating company:', error);
             throw error;
         }
+    },
+
+    /**
+     * Resets the dashboard to initial state.
+     */
+    async resetDashboard() {
+        try {
+            return await apiClient.post('/companies/reset/');
+        } catch (error) {
+            console.error('Error resetting dashboard:', error);
+            throw error;
+        }
     }
 };
 

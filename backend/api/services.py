@@ -8,7 +8,7 @@ from .repositories import (
     ICompanyRepository, IDMRepository, ILaunchEventRepository,
     get_company_repository, get_dm_repository, get_launch_repository
 )
-from .models import Company, DM_Draft, LaunchEvent
+from .models import Company, DM_Draft, LaunchEvent, ContactInfo
 
 # Default threshold - number of likes below which a launch is deemed "poor"
 DEFAULT_POOR_ENGAGEMENT_THRESHOLD = 100
@@ -156,7 +156,7 @@ class CompanyService:
         """
         Creates a new company and its first launch event from search data.
         """
-        name = data.get('name', data.get('author', 'Unknown Author'))
+        name = str(data.get('name') or data.get('author') or 'Unknown Author')
         
         # Check for duplication
         existing = Company.objects.filter(name__iexact=name).first()
@@ -171,15 +171,118 @@ class CompanyService:
             description=description,
             logo_url=logo_url
         )
-        
-        launch_repo = get_launch_repository()
-        launch_repo.create_launch(
+
+        # Create the initial launch event for this new entry
+        LaunchEvent.objects.create(
             company=company,
             platform=data.get('platform', 'X'),
-            post_url=data.get('url', ''),
-            likes_count=data.get('likes', 0)
+            likes_count=data.get('likes', 0),
+            post_url=data.get('url', '')
         )
+
+        # Create contact info
+        ContactInfo.objects.create(
+            company=company,
+            email=data.get('email', f"contact@{name.lower().replace(' ', '')}.io"),
+            x_handle=name.lower().replace(' ', ''),
+            linkedin_handle=name.lower().replace(' ', '')
+        )
+
         return company
+
+    def reset_dashboard(self) -> None:
+        """
+        Clears all existing data and restores the original initial state.
+        """
+        # 1. Clear everything
+        try:
+            DM_Draft.objects.all().delete()
+            ContactInfo.objects.all().delete()
+            LaunchEvent.objects.all().delete()
+            Company.objects.all().delete()
+        except Exception:
+            pass
+
+        # 2. Re-create Initial State
+        initial_data = [
+            {
+                "name": "Zenith Labs",
+                "raised": 1000000,
+                "desc": "Empowering developers to build the next generation of SaaS tools.",
+                "platform": "X",
+                "likes": 2516,
+                "url": "https://x.com/zenithlabs/status/123",
+                "email": "contact@zenithlabs.io",
+                "phone": "+1-555-1001"
+            },
+            {
+                "name": "Solar Corp",
+                "raised": 10000000,
+                "desc": "Revolutionizing E-commerce with automated workflows and AI-driven insights.",
+                "platform": "LinkedIn",
+                "likes": 4579,
+                "url": "https://www.linkedin.com/posts/solar-corp-launch",
+                "email": "contact@solarcorp.io",
+                "phone": "+1-555-4245"
+            },
+            {
+                "name": "Quantum AI",
+                "raised": 5000000,
+                "desc": "Innovating the AI space with cutting-edge technology and human-centric design.",
+                "platform": "X",
+                "likes": 842,
+                "url": "https://x.com/quantumai/status/456",
+                "email": "contact@quantumai.ai",
+                "phone": "+1-555-8888"
+            },
+            {
+                "name": "Nexus Dynamics",
+                "raised": 2500000,
+                "desc": "A leading provider of Automation solutions for the modern enterprise.",
+                "platform": "LinkedIn",
+                "likes": 1230,
+                "url": "https://www.linkedin.com/posts/nexus-dynamics",
+                "email": "info@nexusdynamics.com",
+                "phone": "+1-555-2233"
+            },
+            {
+                "name": "Flux Spark",
+                "raised": 1500000,
+                "desc": "The all-in-one platform for FinTech management and scaling.",
+                "platform": "X",
+                "likes": 156,
+                "url": "https://x.com/fluxspark/status/789",
+                "email": "hello@fluxspark.com",
+                "phone": "+1-555-9900"
+            }
+        ]
+
+        for item in initial_data:
+            c = self.repository.create_company(
+                name=item["name"],
+                description=item["desc"],
+                logo_url=f"https://picsum.photos/seed/{item['name'].lower().replace(' ', '')}/200"
+            )
+            # Update amount raised
+            c.amount_raised = item["raised"]
+            c.save()
+
+            # Create Launch Event
+            LaunchEvent.objects.create(
+                company=c,
+                platform=item["platform"],
+                likes_count=item["likes"],
+                post_url=item["url"]
+            )
+
+            # Create Contact Info
+            ContactInfo.objects.create(
+                company=c,
+                email=item["email"],
+                phone_number=item["phone"],
+                x_handle=item["name"].lower().replace(' ', ''),
+                linkedin_handle=item["name"].lower().replace(' ', '')
+            )
 
 # Providers
 def get_dm_service() -> DMService:

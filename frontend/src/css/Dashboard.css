@@ -72,3 +72,35 @@
         transform: rotate(360deg);
     }
 }
+
+.dashboard-footer {
+    display: flex;
+    justify-content: center;
+    padding: 4rem 0 2rem;
+    width: 100%;
+}
+
+.reset-dashboard-button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reset-dashboard-button:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+
+.reset-dashboard-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
