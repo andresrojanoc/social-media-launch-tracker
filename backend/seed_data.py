@@ -28,17 +28,30 @@ DESC_TEMPLATES = [
 INDUSTRIES = ["SaaS", "FinTech", "HealthTech", "Analytics", "Automation", "E-commerce", "Cybersecurity"]
 
 def seed_data(count):
+    from django.core.management import call_command
+    from django.db import connection
+    
+    print("Checking database tables...")
+    # Automatically run migrations if needed
+    call_command('migrate', interactive=False, verbosity=1)
+
     print(f"Seeding {count} sample companies...")
 
     # Clear existing data
     try:
         from api.models import DM_Draft
         DM_Draft.objects.all().delete()
-    except Exception:
-        pass
-    ContactInfo.objects.all().delete()
-    LaunchEvent.objects.all().delete()
-    Company.objects.all().delete()
+    except Exception as e:
+        print(f"Note: Could not clear DM_Draft (might not exist yet): {e}")
+        
+    try:
+        ContactInfo.objects.all().delete()
+        LaunchEvent.objects.all().delete()
+        Company.objects.all().delete()
+    except Exception as e:
+        print(f"Error clearing existing data: {e}")
+        print("Make sure migrations have been applied.")
+        return
 
     platforms = ["X", "LinkedIn", "Crunchbase"]
     statuses = ["Good", "Poor"]

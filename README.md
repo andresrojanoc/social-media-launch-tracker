@@ -73,10 +73,10 @@ npm install && cd frontend && npm install && cd ..
 ### 2. Backend Virtual Environment
 Run these commands in the project root:
 ```bash
-cd backend && python -m venv venv && .\venv\Scripts\activate && pip install -r requirements.txt && cd ..
+cd backend && python -m venv venv && .\venv\Scripts\activate && pip install -r requirements.txt && python manage.py migrate && cd ..
 ```
 *Note: For older versions of PowerShell (pre-v7), use `;` instead of `&&`:*
-`cd backend; python -m venv venv; .\venv\Scripts\activate; pip install -r requirements.txt; cd ..`
+`cd backend; python -m venv venv; .\venv\Scripts\activate; pip install -r requirements.txt; python manage.py migrate; cd ..`
 
 ---
 
